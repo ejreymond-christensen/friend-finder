@@ -1,0 +1,30 @@
+{
+  "name": "ut-friend-finder",
+  "version": "1.0.0",
+  "description": "friend finder",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ejreymond-christensen/ut-friend-finder.git"
+  },
+  "keywords": [
+    "friend",
+    "finder",
+    "node",
+    "express"
+  ],
+  "author": "elliot reymond-christensen",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ejreymond-christensen/ut-friend-finder/issues"
+  },
+  "homepage": "https://github.com/ejreymond-christensen/ut-friend-finder#readme",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "express": "^4.16.2",
+    "path": "^0.12.7"
+  }
+}
