@@ -8,6 +8,9 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
   <link href="https://fonts.googleapis.com/css?family=Baloo+Paaji|Nunito" rel="stylesheet">
   <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
+  <script src="https://code.jquery.com/jquery.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -15,7 +18,7 @@
     <h1 class="display-4 text-uppercase text-center" style="font-family: 'Baloo Paaji', cursive;">Survey Questions</h1>
     <hr class="my-4">
     <h3 style="font-family: 'Baloo Paaji', cursive;">About You</h3>
-    <form class="needs-validation" novalidate>
+    <form id= "form" class="needs-validation" novalidate>
       <div class="form-group">
         <label for="aboutyou">Name - (required)</label>
         <input type="text" class="form-control" id="name" required>
@@ -182,36 +185,77 @@
         </div>
       </div>
       <hr class="my-4">
-      <button type="submit" class="btn btn-info" id="submitSurvey">Submit</button>
+      <button class="btn btn-info" id="submitSurvey">Submit</button>
     </form>
-
-    <script>
-      // Example starter JavaScript for disabling form submissions if there are invalid fields
-      (function() {
-        'use strict';
-        window.addEventListener('load', function() {
-          // Fetch all the forms we want to apply custom Bootstrap validation styles to
-          var forms = document.getElementsByClassName('needs-validation');
-          // Loop over them and prevent submission
-          var validation = Array.prototype.filter.call(forms, function(form) {
-            form.addEventListener('submit', function(event) {
-              if (form.checkValidity() === false) {
-                event.preventDefault();
-                event.stopPropagation();
-              }
-              form.classList.add('was-validated');
-              // Ajax post
-              
-            }, false);
-          });
-        }, false);
-      })();
-    </script>
-
+    <div class="modal" id="resultsModal" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Potential Friend</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p>Modal body text goes here.</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  <script>
+    //Example starter JavaScript for disabling form submissions if there are invalid fields
+    // (function() {
+    //   'use strict';
+    //   window.addEventListener('load', function() {
+    //     // Fetch all the forms we want to apply custom Bootstrap validation styles to
+    //     var forms = document.getElementsByClassName('needs-validation');
+    //     // Loop over them and prevent submission
+    //     var validation = Array.prototype.filter.call(forms, function(form) {
+    //       form.addEventListener('submit', function(event) {
+    //         if (form.checkValidity() === false) {
+    //           event.preventDefault();
+    //           event.stopPropagation();
+    //         }
+    //         form.classList.add('was-validated');
+    //       }, false);
+    //     });
+    //   }, false);
+    // })();
+
+$("#submitSurvey").on("click", function(){
+  var x = $('#form')[0].checkValidity();
+  if (x === true){
+
+        var newfriend = {
+          name: $("#name").val().trim(),
+          photo: $("#photo").val().trim(),
+          scores: [
+            parseInt($("#q1").val()),
+            parseInt($("#q2").val()),
+            parseInt($("#q3").val()),
+            parseInt($("#q4").val()),
+            parseInt($("#q5").val()),
+            parseInt($("#q6").val()),
+            parseInt($("#q7").val()),
+            parseInt($("#q8").val()),
+            parseInt($("#q9").val()),
+            parseInt($("#q10").val())
+          ]
+        };
+        $.post("/api/friends", newfriend, function(data) {
+
+        }).then(function(){
+          $("#resultsModal").modal("show");
+        });
+        console.log("coucou");
+  }
+});
+
+  </script>
 </body>
 
 </html>
