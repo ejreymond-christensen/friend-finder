@@ -18,7 +18,7 @@
     <h1 class="display-4 text-uppercase text-center" style="font-family: 'Baloo Paaji', cursive;">Survey Questions</h1>
     <hr class="my-4">
     <h3 style="font-family: 'Baloo Paaji', cursive;">About You</h3>
-    <form id= "form" class="needs-validation" novalidate>
+    <form id="form" class="needs-validation" novalidate>
       <div class="form-group">
         <label for="aboutyou">Name - (required)</label>
         <input type="text" class="form-control" id="name" required>
@@ -191,13 +191,15 @@
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title">Potential Friend</h5>
+            <h2 class="modal-title" style="font-family: 'Baloo Paaji', cursive;">Potential Friend</h2>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
           <div class="modal-body">
-            <p>Modal body text goes here.</p>
+            <h4 style="font-family: 'Baloo Paaji', cursive;">Your best match is:</h4>
+            <h5 style="font-family: 'Baloo Paaji', cursive;" class="text-center" id="matchName"></h5>
+            <img id="matchPhoto" src="#" alt="friends photo" class="text-center" style="max-width: 400px; height: auto;">
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -208,28 +210,29 @@
   </div>
   <script>
     //Example starter JavaScript for disabling form submissions if there are invalid fields
-    // (function() {
-    //   'use strict';
-    //   window.addEventListener('load', function() {
-    //     // Fetch all the forms we want to apply custom Bootstrap validation styles to
-    //     var forms = document.getElementsByClassName('needs-validation');
-    //     // Loop over them and prevent submission
-    //     var validation = Array.prototype.filter.call(forms, function(form) {
-    //       form.addEventListener('submit', function(event) {
-    //         if (form.checkValidity() === false) {
-    //           event.preventDefault();
-    //           event.stopPropagation();
-    //         }
-    //         form.classList.add('was-validated');
-    //       }, false);
-    //     });
-    //   }, false);
-    // })();
+    (function() {
+      'use strict';
+      window.addEventListener('load', function() {
+        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        var forms = document.getElementsByClassName('needs-validation');
+        // Loop over them and prevent submission
+        var validation = Array.prototype.filter.call(forms, function(form) {
+          form.addEventListener('submit', function(event) {
+            if (form.checkValidity() === false) {
+              event.preventDefault();
+              event.stopPropagation();
+            }
+            form.classList.add('was-validated');
+          }, false);
+        });
+      }, false);
+    })();
 
-$("#submitSurvey").on("click", function(){
-  var x = $('#form')[0].checkValidity();
-  if (x === true){
-
+    $("#submitSurvey").on("click", function(e) {
+      var x = $('#form')[0].checkValidity();
+      if (x === true) {
+        e.preventDefault();
+        $("#resultsModal").modal("show");
         var newfriend = {
           name: $("#name").val().trim(),
           photo: $("#photo").val().trim(),
@@ -247,14 +250,14 @@ $("#submitSurvey").on("click", function(){
           ]
         };
         $.post("/api/friends", newfriend, function(data) {
-
-        }).then(function(){
-          $("#resultsModal").modal("show");
-        });
-        console.log("coucou");
-  }
-});
-
+          $("#matchName").text(data[0]);
+          $('#matchPhoto').attr('src', data[1]);
+          $('#form').each(function() {
+            this.reset();
+          });
+        })
+      }
+    });
   </script>
 </body>
 
