@@ -1,4 +1,4 @@
-# ut-friend-finder
+# friend-finder
 a compatibility-based Friend finder app using node and express
 
  
@@ -11,4 +11,4 @@ Take the survey, add your name and a address of a photo of yourself. Fill out th
 ### How to run the program
 you can go to : https://limitless-waters-95574.herokuapp.com/
 
-or clone the repo `ut-friend-finder`, clone the repo, `npm install` all the node dependencies and host it on our own node server.
+or clone the repo `friend-finder`, clone the repo, `npm install` all the node dependencies and host it on our own node server.
