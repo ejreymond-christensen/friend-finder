@@ -1,5 +1,5 @@
 # friend-finder
-a compatibility-based Friend finder app using node and express
+a compatibility-based Friend finder app using node and express.
 
  
  ### Friend Finder
